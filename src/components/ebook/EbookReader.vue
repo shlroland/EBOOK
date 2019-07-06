@@ -6,6 +6,7 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
+import { FONT_FAMILY } from '../../utils/book'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
@@ -14,7 +15,7 @@ export default {
   },
   data () {
     return {
-
+      fontFamilyList: FONT_FAMILY
     }
   },
   methods: {
@@ -31,15 +32,17 @@ export default {
     toggleTitleAndMenu () {
       if (this.menuVisible) {
         this.setSettingVisible(-1)
+        this.setFontFamilyVisible(false)
       }
       this.setMenuVisible(!this.menuVisible)
     },
     hideTitleAndMenu () {
       this.setMenuVisible(false)
       this.setSettingVisible(-1)
+      this.setFontFamilyVisible(false)
     },
     initEpub () {
-      const baseUrl = 'http://localhost:8081/'
+      const baseUrl = 'http://localhost:8081/epub/'
       const url = baseUrl + this.fileName + '.epub'
       this.book = new Epub(url)
       this.setCurrentBook(this.book)
@@ -66,6 +69,11 @@ export default {
         }
         e.preventDefault()
         e.stopPropagation()
+      })
+      this.rendition.hooks.content.register(contents => {
+        for (let i = 0, len = this.fontFamilyList.length; i < len; i++) {
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/${this.fontFamilyList[i].font}.css`)
+        }
       })
     }
   },

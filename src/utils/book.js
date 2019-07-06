@@ -10,10 +10,10 @@ export const FONT_SIZE_LIST = [
 export const FONT_FAMILY = [
   { font: 'Default' },
   { font: 'Cabin' },
-  { font: 'Days One' },
+  { font: 'daysOne' },
   { font: 'Montserrat' },
   { font: 'Tangerine' },
-  { font: '手写体' },
+  { font: '手书体' },
   { font: '文泉驿微米黑' },
   { font: '沐瑶软笔手写体' },
   { font: '站酷文艺体' }

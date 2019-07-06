@@ -8,7 +8,12 @@
         <span class="ebook-popup-title-text">选择字体</span>
       </div>
       <div class="ebook-popup-list-wrapper">
-        <div class="ebook-popup-list-item" v-for="(item, index) in fontFamilyList" :key="index">
+        <div
+          class="ebook-popup-list-item"
+          v-for="(item, index) in fontFamilyList"
+          :key="index"
+          @click="setFontFamily(item.font)"
+        >
           <div class="ebook-popup-list-text" :class="{'select':isSelected(item)}">{{item.font}}</div>
           <div class="ebook-popup-list-icon" v-if="isSelected(item)">
             <span class="icon-check"></span>
@@ -31,6 +36,10 @@ export default {
   },
 
   methods: {
+    setFontFamily (font) {
+      this.setDefaultFontFamily(font)
+      this.currentBook.rendition.themes.font(font)
+    },
     hide () {
       this.setFontFamilyVisible(false)
     },
@@ -85,7 +94,7 @@ export default {
         flex: 1;
         font-size: px2rem(14);
         text-align: left;
-        &.select{
+        &.select {
           color: #346cb9;
           font-weight: bold;
         }
