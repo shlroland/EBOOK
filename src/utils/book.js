@@ -7,3 +7,14 @@ export const FONT_SIZE_LIST = [
   { fontSize: 22 },
   { fontSize: 24 }
 ]
+export const FONT_FAMILY = [
+  { font: 'Default' },
+  { font: 'Cabin' },
+  { font: 'Days One' },
+  { font: 'Montserrat' },
+  { font: 'Tangerine' },
+  { font: '手写体' },
+  { font: '文泉驿微米黑' },
+  { font: '沐瑶软笔手写体' },
+  { font: '站酷文艺体' }
+]

@@ -24,13 +24,21 @@
           :style="{fontSize: fontSizeList[fontSizeList.length - 1].fontSize + 'px'}"
         >A</div>
       </div>
+      <div class="setting-font-family" @click="showFontFamilyPopup">
+        <div class="setting-font-family-text-wrapper">
+          <span class="setting-font-family-text">{{defaultFontFamily}}</span>
+        </div>
+        <div class="seetting-font-family-icon-wrapper">
+          <span class="icon-forward"></span>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import { FONT_SIZE_LIST } from '../../utils/book';
+import { FONT_SIZE_LIST } from '../../utils/book'
 export default {
   mixins: [ebookMixin],
   data () {
@@ -42,6 +50,9 @@ export default {
     setFontSize (fontSize) {
       this.setDefaultFontSize(fontSize)
       this.currentBook.rendition.themes.fontSize(fontSize)
+    },
+    showFontFamilyPopup () {
+      this.setFontFamilyVisible(true)
     }
   },
   components: {
@@ -61,9 +72,12 @@ export default {
   height: px2rem(90);
   background: white;
   box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
   .setting-font-size {
     display: flex;
     height: 100%;
+    flex: 2;
     .preview {
       flex: 0 0 px2rem(40);
       @include center;
@@ -120,6 +134,17 @@ export default {
           }
         }
       }
+    }
+  }
+  .setting-font-family {
+    flex: 1;
+    @include center;
+    font-size: px2rem(14);
+    .setting-font-family-text-wrapper {
+      @include center;
+    }
+    .setting-font-family-icon-wrapper {
+      @include center;
     }
   }
 }

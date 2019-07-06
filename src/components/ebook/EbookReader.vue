@@ -21,20 +21,20 @@ export default {
     prevPage () {
       if (this.rendition) {
         this.rendition.prev()
-        this.hideTittleAndMenu()
+        this.hideTitleAndMenu()
       }
     },
     nextPage () {
       this.rendition.next()
-      this.hideTittleAndMenu()
+      this.hideTitleAndMenu()
     },
-    toggleTittleAndMenu () {
+    toggleTitleAndMenu () {
       if (this.menuVisible) {
         this.setSettingVisible(-1)
       }
       this.setMenuVisible(!this.menuVisible)
     },
-    hideTittleAndMenu () {
+    hideTitleAndMenu () {
       this.setMenuVisible(false)
       this.setSettingVisible(-1)
     },
@@ -62,7 +62,7 @@ export default {
         } else if (time < 500 && offsetX < -40) {
           this.nextPage()
         } else {
-          this.toggleTittleAndMenu()
+          this.toggleTitleAndMenu()
         }
         e.preventDefault()
         e.stopPropagation()

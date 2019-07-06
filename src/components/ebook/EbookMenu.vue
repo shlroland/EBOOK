@@ -1,27 +1,33 @@
 <template>
-<div>
-  <transition name="slide-up">
-    <div class="menu-wrapper" :class="{'hide-box-shadow': !menuVisible || settingVisible >=0 }" v-show="menuVisible">
-      <div class="icon-wrapper">
-        <span class="icon-menu" @click="showSetting(3)"></span>
+  <div>
+    <transition name="slide-up">
+      <div
+        class="menu-wrapper"
+        :class="{'hide-box-shadow': !menuVisible || settingVisible >=0 }"
+        v-show="menuVisible"
+      >
+        <div class="icon-wrapper">
+          <span class="icon-menu" @click="showSetting(3)"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="icon-progress" @click="showSetting(2)"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="icon-bright" @click="showSetting(1)"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="icon-a" @click="showSetting(0)">A</span>
+        </div>
       </div>
-      <div class="icon-wrapper">
-        <span class="icon-progress" @click="showSetting(2)"></span>
-      </div>
-      <div class="icon-wrapper">
-        <span class="icon-bright" @click="showSetting(1)"></span>
-      </div>
-      <div class="icon-wrapper">
-        <span class="icon-a" @click="showSetting(0)">A</span>
-      </div>
-    </div>
-  </transition>
-  <ebook-setting-font></ebook-setting-font>
-</div>
+    </transition>
+    <ebook-setting-font></ebook-setting-font>
+    <ebook-setting-font-popup></ebook-setting-font-popup>
+  </div>
 </template>
 
 <script>
-import EbookSettingFont from './EbookSettingFont';
+import EbookSettingFont from './EbookSettingFont'
+import EbookSettingFontPopup from './EbookSettingFontPopup'
 import { ebookMixin } from '../../utils/mixin'
 export default {
   data () {
@@ -39,7 +45,8 @@ export default {
     }
   },
   components: {
-    EbookSettingFont
+    EbookSettingFont,
+    EbookSettingFontPopup
   }
 }
 </script>
