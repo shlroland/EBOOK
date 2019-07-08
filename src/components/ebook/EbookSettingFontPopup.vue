@@ -27,6 +27,7 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import { FONT_FAMILY } from '../../utils/book'
+import { saveFontFamily } from '../../utils/LocalStorage'
 export default {
   mixins: [ebookMixin],
   data () {
@@ -38,6 +39,7 @@ export default {
   methods: {
     setFontFamily (font) {
       this.setDefaultFontFamily(font)
+      saveFontFamily(this.fileName, font)
       this.currentBook.rendition.themes.font(font)
     },
     hide () {

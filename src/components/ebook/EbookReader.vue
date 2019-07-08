@@ -7,6 +7,7 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import { FONT_FAMILY } from '../../utils/book'
+import { getFontFamily, saveFontFamily, getFontSize, saveFontSize } from '../../utils/LocalStorage'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
@@ -41,6 +42,24 @@ export default {
       this.setSettingVisible(-1)
       this.setFontFamilyVisible(false)
     },
+    initFontSize () {
+      let font = getFontSize(this.fileName)
+      if (!font) {
+        saveFontSize(this.fileName, this.defaultFontSize)
+      } else {
+        this.rendition.themes.fontSize(font)
+        this.setDefaultFontSize(font)
+      }
+    },
+    initFOntFamily () {
+      let font = getFontFamily(this.fileName)
+      if (!font) {
+        saveFontFamily(this.fileName, this.defaultFontFamily)
+      } else {
+        this.rendition.themes.font(font)
+        this.setDefaultFontFamily(font)
+      }
+    },
     initEpub () {
       const baseUrl = 'http://localhost:8081/epub/'
       const url = baseUrl + this.fileName + '.epub'
@@ -51,8 +70,10 @@ export default {
         height: innerHeight,
         method: 'default'
       })
-      this.rendition.display()
-      console.log(this.rendition)
+      this.rendition.display().then(() => {
+        this.initFontSize()
+        this.initFOntFamily()
+      })
       this.rendition.on('touchstart', e => {
         this.touchStartX = e.changedTouches[0].clientX
         this.touchStartTime = e.timeStamp
