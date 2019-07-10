@@ -7,7 +7,7 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import { FONT_FAMILY } from '../../utils/book'
-import { getFontFamily, saveFontFamily, getFontSize, saveFontSize } from '../../utils/LocalStorage'
+import { getFontFamily, saveFontFamily, getFontSize, saveFontSize, getTheme, saveTheme } from '../../utils/LocalStorage'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
@@ -51,7 +51,7 @@ export default {
         this.setDefaultFontSize(font)
       }
     },
-    initFOntFamily () {
+    initFontFamily () {
       let font = getFontFamily(this.fileName)
       if (!font) {
         saveFontFamily(this.fileName, this.defaultFontFamily)
@@ -60,8 +60,20 @@ export default {
         this.setDefaultFontFamily(font)
       }
     },
+    initTheme () {
+      let defaultTheme = getTheme(this.fileName)
+      if (!defaultTheme) {
+        defaultTheme = this.themeList[0].name
+        saveTheme(this.fileName, defaultTheme)
+      }
+      this.setDefaultTheme(defaultTheme)
+      this.themeList.forEach(theme => {
+        this.rendition.themes.register(theme.name, theme.style)
+      })
+      this.rendition.themes.select(defaultTheme)
+    },
     initEpub () {
-      const baseUrl = 'http://localhost:8081/epub/'
+      const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
       const url = baseUrl + this.fileName + '.epub'
       this.book = new Epub(url)
       this.setCurrentBook(this.book)
@@ -72,7 +84,9 @@ export default {
       })
       this.rendition.display().then(() => {
         this.initFontSize()
-        this.initFOntFamily()
+        this.initFontFamily()
+        this.initTheme()
+        this.initGlobalTheme()
       })
       this.rendition.on('touchstart', e => {
         this.touchStartX = e.changedTouches[0].clientX
