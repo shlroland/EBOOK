@@ -72,11 +72,7 @@ export default {
       })
       this.rendition.themes.select(defaultTheme)
     },
-    initEpub () {
-      const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
-      const url = baseUrl + this.fileName + '.epub'
-      this.book = new Epub(url)
-      this.setCurrentBook(this.book)
+    initRendition () {
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,
         height: innerHeight,
@@ -88,6 +84,13 @@ export default {
         this.initTheme()
         this.initGlobalTheme()
       })
+      this.rendition.hooks.content.register(contents => {
+        for (let i = 0, len = this.fontFamilyList.length; i < len; i++) {
+          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/${this.fontFamilyList[i].font}.css`)
+        }
+      })
+    },
+    initGesture () {
       this.rendition.on('touchstart', e => {
         this.touchStartX = e.changedTouches[0].clientX
         this.touchStartTime = e.timeStamp
@@ -105,11 +108,21 @@ export default {
         e.preventDefault()
         e.stopPropagation()
       })
-      this.rendition.hooks.content.register(contents => {
-        for (let i = 0, len = this.fontFamilyList.length; i < len; i++) {
-          contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/${this.fontFamilyList[i].font}.css`)
-        }
-      })
+    },
+    initEpub () {
+      const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
+      const url = baseUrl + this.fileName + '.epub'
+      this.book = new Epub(url)
+      this.setCurrentBook(this.book)
+      this.initRendition()
+      this.initGesture()
+      this.book.ready
+        .then(() => {
+          return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName)))
+        })
+        .then((locations => {
+          this.setBookAvailable(true)
+        }))
     }
   },
   components: {
