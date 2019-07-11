@@ -118,11 +118,12 @@ export default {
       this.initGesture()
       this.book.ready
         .then(() => {
-          return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName)))
+          return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
         })
-        .then((locations => {
+        .then((locations) => {
+          console.log(locations)
           this.setBookAvailable(true)
-        }))
+        })
     }
   },
   components: {

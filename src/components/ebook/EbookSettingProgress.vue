@@ -44,16 +44,33 @@ export default {
     }
   },
   mounted () {
-    console.log(this.bookAvailable)
+
   },
   methods: {
-    onProgressChange (progress) { },
-    onProgressInput (progress) { },
+    onProgressChange (progress) {
+      this.setProgress(progress).then(() => {
+        this.displayProgress()
+        this.updateProgressBg()
+      })
+    },
+    displayProgress () {
+      const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100)
+      this.currentBook.rendition.display(cfi)
+      console.log(cfi)
+    },
+    onProgressInput (progress) {
+      this.setProgress(progress).then(() => {
+        this.updateProgressBg()
+      })
+    },
+    updateProgressBg () {
+      this.$refs.progress.style.backgroundSize = `${this.progress}%100%`
+    },
     preSection () { },
     nextSection () { }
   },
-  components: {
-
+  updated () {
+    this.updateProgressBg()
   }
 }
 </script>
@@ -96,8 +113,6 @@ export default {
         width: 100%;
         -webkit-appearance: none;
         height: px2rem(2);
-        background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
-        background-size: 0 100% !important;
         margin: 0 px2rem(10);
         &:focus {
           outline: none;
