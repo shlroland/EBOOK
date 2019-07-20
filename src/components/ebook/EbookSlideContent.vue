@@ -5,9 +5,32 @@
         <div class="slide-contents-search-icon">
           <span class="icon-search"></span>
         </div>
-        <input type="text" class="slide-contents-search-input" :placeholder="$t('book.searchHint')" @click="showSearchVisible()"/>
+        <input
+          type="text"
+          class="slide-contents-search-input"
+          :placeholder="$t('book.searchHint')"
+          @click="showSearchVisible()"
+        />
       </div>
-      <div class="slide-contents-search-cancel" @click="hideSearchVisible()" v-if="searchVisible">{{$t('book.cancel')}}</div>
+      <div
+        class="slide-contents-search-cancel"
+        @click="hideSearchVisible()"
+        v-if="searchVisible"
+      >{{$t('book.cancel')}}</div>
+    </div>
+    <div class="slide-contents-book-img-wrapper">
+      <img :src="cover" alt="cover" class="slide-contents-book-img" />
+    </div>
+    <div class="slide-contents-book-info-wrapper">
+      <div class="slide-contents-book-title"></div>
+      <div class="slide-contents-book-author"></div>
+    </div>
+    <div class="slide-contents-book-progress-wrapper">
+      <div class="slide-contents-book-progress">
+        <span class="progress">{{progress+'%'}}</span>
+        <div class="progress-text">{{$t('book.haveRead2')}}</div>
+      </div>
+      <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
     </div>
   </div>
 </template>

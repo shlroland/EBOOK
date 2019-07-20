@@ -30,7 +30,7 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import EbookSlideContent from './EbookSlideContent'
-import EbookSlideBookMark from './EbookSlideBookMark';
+import EbookSlideBookMark from './EbookSlideBookMark'
 export default {
   mixins: [ebookMixin],
   data () {
