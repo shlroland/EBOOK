@@ -94,7 +94,7 @@ export const ebookMixin = {
       this.setFontFamilyVisible(false)
     },
     getReadTimeText () {
-      return this.$t('book.haveRead').replace('$1', getReadTimeByMinute())
+      return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))
     }
   }
 }

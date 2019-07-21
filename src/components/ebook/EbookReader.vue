@@ -6,7 +6,7 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import { FONT_FAMILY } from '../../utils/book'
+import { FONT_FAMILY, flatten } from '../../utils/book'
 import {
   getFontFamily,
   saveFontFamily,
@@ -15,7 +15,7 @@ import {
   getTheme,
   saveTheme,
   getLocation
-  } from '../../utils/LocalStorage'
+} from '../../utils/LocalStorage'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
@@ -92,10 +92,6 @@ export default {
         this.initTheme()
         this.initGlobalTheme()
       })
-      // this.rendition.display().then(() => {
-
-      //   this.refreshLocation()
-      // })
       this.rendition.hooks.content.register(contents => {
         for (let i = 0, len = this.fontFamilyList.length; i < len; i++) {
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/${this.fontFamilyList[i].font}.css`)
@@ -121,6 +117,26 @@ export default {
         e.stopPropagation()
       })
     },
+    parseBook () {
+      this.book.loaded.cover.then(cover => {
+        this.book.archive.createUrl(cover).then(url => {
+          this.setCover(url)
+        })
+      })
+      this.book.loaded.metadata.then(metadata => {
+        this.setMetadata(metadata)
+      })
+      this.book.loaded.navigation.then(nav => {
+        const navItems = flatten(nav.toc)
+        function find (item, level = 0) {
+          return !item.parent ? level : find(navItems.filter(parentItems => parentItems.id === item.parent)[0], ++level)
+        }
+        navItems.forEach(item => {
+          item.level = find(item)
+        })
+        this.setNavigation(navItems)
+      })
+    },
     initEpub () {
       const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
       const url = baseUrl + this.fileName + '.epub'
@@ -128,6 +144,7 @@ export default {
       this.setCurrentBook(this.book)
       this.initRendition()
       this.initGesture()
+      this.parseBook()
       this.book.ready
         .then(() => {
           return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
