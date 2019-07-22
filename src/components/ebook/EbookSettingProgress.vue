@@ -46,16 +46,17 @@ export default {
   },
   computed: {
     getSectionName () {
-      // console.log(this.section)
-      if (this.section) {
-        const sectionInfo = this.currentBook.section(this.section)
-        // console.log(sectionInfo)
-        if (sectionInfo && sectionInfo.href) {
-          console.log(sectionInfo.href)
-          return this.currentBook.navigation.get(sectionInfo.href).label
-        }
-      }
-      return ''
+      // // console.log(this.section)
+      // if (this.section) {
+      //   const sectionInfo = this.currentBook.section(this.section)
+      //   // console.log(sectionInfo)
+      //   if (sectionInfo && sectionInfo.href) {
+      //     console.log(sectionInfo.href)
+      //     return this.currentBook.navigation.get(sectionInfo.href).label
+      //   }
+      // }
+      // return ''
+      return this.section?this.navigation[this.section].label:''
     }
   },
   methods: {
