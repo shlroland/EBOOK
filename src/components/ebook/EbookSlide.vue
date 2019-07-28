@@ -44,9 +44,6 @@ export default {
     selectTab (num) {
       this.currentTab = num
     }
-  },
-  components: {
-
   }
 }
 </script>
