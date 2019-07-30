@@ -3,6 +3,7 @@
     <ebook-tittle></ebook-tittle>
     <ebook-reader></ebook-reader>
     <ebook-menu></ebook-menu>
+    <ebook-book-mark></ebook-book-mark>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import EbookReader from '../../components/ebook/EbookReader'
 import EbookTittle from '../../components/ebook/EbookTittle'
 import EbookMenu from '../../components/ebook/EbookMenu'
+import EbookBookMark from '../../components/ebook/EbookBookMark'
 import { getReadTime, saveReadTime } from '../../utils/LocalStorage'
 import { setInterval, clearInterval, setTimeout } from 'timers'
 import { ebookMixin } from '../../utils/mixin'
@@ -18,17 +20,20 @@ export default {
   mixins: [ebookMixin],
   watch: {
     offsetY (v) {
-      if (v > 0) {
-        this.move(v)
-      } else if (v === 0) {
-        this.restore()
+      if (!this.menuVisible && this.bookAvailable) {
+        if (v > 0) {
+          this.move(v)
+        } else if (v === 0) {
+          this.restore()
+        }
       }
     }
   },
   components: {
     EbookReader,
     EbookTittle,
-    EbookMenu
+    EbookMenu,
+    EbookBookMark
   },
   mounted () {
     this.startLoopReadTime()
