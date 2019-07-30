@@ -240,7 +240,7 @@ export default {
         flex: 1;
         @include ellipsis;
         font-size: px2rem(14);
-        line-height: 16px;
+        line-height: px2rem(16);
       }
       \.slide-contents-item-page {
       }
