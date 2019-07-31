@@ -1,7 +1,7 @@
 const messages = {
   home: {
     title: 'Book Store',
-    hint: 'Computer Science And Software Engineering',
+    hint: 'Science Fiction',
     guessYouLike: 'Guess You Like',
     change: 'Change',
     clear: 'Clear',

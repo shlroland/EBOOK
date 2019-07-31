@@ -1,13 +1,20 @@
 <template>
-
+  <div class="store-home">
+  <search-bar></search-bar>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'StoreHome'
+  import SearchBar from '../../components/home/SearchBar'
+
+  export default {
+    name: 'StoreHome',
+    components:{
+      SearchBar
     }
+  }
 </script>
 
 <style scoped>
-@import "../../assets/style/global.scss";
+  @import "../../assets/style/global.scss";
 </style>

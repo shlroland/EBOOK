@@ -8,6 +8,7 @@ $fontSize: 37.5;
   justify-content: center;
   align-items: center;
 }
+
 @mixin left {
   display: flex;
   justify-content: flex-start;
@@ -35,9 +36,20 @@ $fontSize: 37.5;
 @mixin ellipsis2($line) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp:$line;
+  -webkit-line-clamp: $line;
   white-space: normal;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.icon {
+  color: #666;
+  font-size: px2rem(16);
+}
+
+.title {
+  color: #666;
+  font-size: px2rem(16);
+  font-weight: bold;
 }

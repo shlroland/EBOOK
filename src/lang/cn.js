@@ -1,7 +1,7 @@
 const messages = {
   home: {
     title: '书城',
-    hint: '计算机科学和软件工程',
+    hint: '科幻小说',
     guessYouLike: '猜你喜欢',
     change: '换一批',
     clear: '清空',
