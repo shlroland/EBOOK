@@ -6,17 +6,28 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '/',
-    redirect: '/ebook'
+    redirect: '/store'
   },
-  {
-    path: '/ebook',
-    component: () => import('./views/ebook/index.vue'),
-    children: [
-      {
-        path: ':fileName',
-        component: () => import('./components/ebook/EbookReader.vue')
-      }
-    ]
-  }
+    {
+      path: '/ebook',
+      component: () => import('./views/ebook/index.vue'),
+      children: [
+        {
+          path: ':fileName',
+          component: () => import('./components/ebook/EbookReader.vue')
+        }
+      ]
+    },
+    {
+      path: '/store',
+      component: () => import('./views/store/index.vue'),
+      redirect: '/store/home',
+      children: [
+        {
+          path: 'home',
+          component: () => import('./views/store/StoreHome.vue')
+        }
+      ]
+    }
   ]
 })
