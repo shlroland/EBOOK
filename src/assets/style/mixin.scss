@@ -1,4 +1,7 @@
 $fontSize: 37.5;
+$animationTime: .2s;
+$animationType: linear;
+$ratio: 375 / 10;
 @function px2rem($px) {
   @return ($px / $fontSize) + rem;
 }
@@ -32,7 +35,12 @@ $fontSize: 37.5;
   overflow: hidden;
   white-space: nowrap;
 }
-
+@mixin columnLeft{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
 @mixin ellipsis2($line) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -41,6 +49,15 @@ $fontSize: 37.5;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 .icon {
