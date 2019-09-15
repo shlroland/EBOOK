@@ -26,7 +26,7 @@
       Scroll,
       HotSearch
     },
-    data() {
+    data () {
       return {
         searchList: {
           hotSearch: [
@@ -126,10 +126,10 @@
       }
     },
     methods: {
-      onScroll(offsetY) {
+      onScroll (offsetY) {
         this.setHotSearchOffsetY(offsetY)
       },
-      reset() {
+      reset () {
         this.$refs.scroll.scrollTo(0, 0)
       }
     }

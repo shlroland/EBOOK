@@ -22,19 +22,19 @@
     components: {
       Scroll
     },
-    data() {
+    data () {
       return {
         bookmark: null
       }
     },
     methods: {
-      displayBookmark(target) {
+      displayBookmark (target) {
         this.display(target, () => {
           this.hideTitleAndMenu()
         })
       }
     },
-    mounted() {
+    mounted () {
       this.bookmark = getBookmark(this.fileName)
     }
   }

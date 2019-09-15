@@ -56,7 +56,7 @@ export default {
       //   }
       // }
       // return ''
-      return this.section?this.navigation[this.section].label:''
+      return this.section ? this.navigation[this.section].label : ''
     }
   },
   methods: {

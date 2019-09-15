@@ -28,7 +28,7 @@
       btn: String,
       hotSearch: Array
     },
-    mounted() {
+    mounted () {
       this.$refs.searchText.forEach(item => {
         item.style.width = window.innerWidth - realPx(20) - realPx(40) + 'px'
       })
