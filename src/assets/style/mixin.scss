@@ -41,6 +41,14 @@ $ratio: 375 / 10;
   justify-content: center;
   align-items: flex-start;
 }
+
+@mixin columnTop{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 @mixin ellipsis2($line) {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -48,7 +56,6 @@ $ratio: 375 / 10;
   white-space: normal;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
 }
 
 @mixin absCenter {

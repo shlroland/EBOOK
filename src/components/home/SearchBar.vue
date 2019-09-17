@@ -26,7 +26,6 @@
         </div>
       </div>
     </div>
-    <flap-card v-show="flapCardVisible"></flap-card>
     <hot-search-list v-show="hotSearchVisible" ref="hotSearch"></hot-search-list>
   </div>
 </template>

@@ -6,6 +6,8 @@ import i18n from './lang'
 // import utils from './utils';
 import './assets/style/icon.css'
 import './assets/style/global.scss'
+import './mock'
+import './lazy'
 
 Vue.config.productionTip = false
 // Vue.use(utils)

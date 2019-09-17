@@ -1,6 +1,6 @@
 <template>
   <div class="flap-card-wrapper" v-show="flapCardVisible">
-    <div class="flap-card-bg" :class="{'animation': runFlapCardAnimation}">
+    <div class="flap-card-bg" :class="{'animation': runFlapCardAnimation}" v-show="runFlapCardAnimation">
       <div class="flap-card" v-for="(item,index) in flapCardList" :key="index" :style="{zIndex:item.zIndex}">
         <div class="flap-card-semi-circle">
           <div class="flap-card-semi-circle-left" :style="semiCircleStyle(item,'left')" ref="left"></div>
@@ -8,7 +8,20 @@
         </div>
       </div>
       <div class="point-wrapper">
-        <div class="point" :class="{'animation': runPointAnimation}"  v-for="item in pointList" :key="item"></div>
+        <div class="point" :class="{'animation': runPointAnimation}" v-for="item in pointList" :key="item"></div>
+      </div>
+    </div>
+    <div class="book-card" :class="{'animation':runBookCardAnimation}" v-show="runBookCardAnimation">
+      <div class="book-card-wrapper">
+        <div class="img-wrapper">
+          <img v-lazy="data ? data.cover:''" class="img" alt="cover">
+        </div>
+        <div class="content-wrapper">
+          <div class="title">{{data ? data.title:''}}</div>
+          <div class="author sub-title-medium">{{data ? data.author:''}}</div>
+          <div class="category">{{categoryText()}}</div>
+        </div>
+        <div class="read-btn" @click.stop="showBookDetail">{{$t('home.readNow')}}</div>
       </div>
     </div>
     <div class="close-btn-wrapper" @click="close">
@@ -19,7 +32,7 @@
 
 <script>
   import { storeHomeMixin } from '../../utils/mixin'
-  import { flapCardList } from '../../utils/store'
+  import { flapCardList, categoryText } from '../../utils/store'
 
   export default {
     mixins: [storeHomeMixin],
@@ -32,8 +45,13 @@
         intervalTime: 25,
         runFlapCardAnimation: false,
         pointList: null,
-        runPointAnimation: false
+        runPointAnimation: false,
+        runBookCardAnimation: false,
+        ifShowBookCard: false
       }
+    },
+    props: {
+      data: Object
     },
     methods: {
       close () {
@@ -67,6 +85,15 @@
           item.rotateDegree = 0
           this.rotate(index, 'left')
         })
+        this.runBookCardAnimation = false
+        this.runFlapCardAnimation = false
+        this.runPointAnimation = false
+        if (this.timer1) {
+          clearTimeout(this.timer1)
+        }
+        if (this.timer2){
+          clearTimeout(this.timer2)
+        }
       },
       prepare () {
         const backFlapCard = this.flapCardList[this.back]
@@ -126,10 +153,6 @@
         this.task = setInterval(() => {
           this.flapCardRotate()
         }, this.intervalTime)
-        setTimeout(()=>{
-          this.runFlapCardAnimation = false
-  this.stopAnimation()
-        },2500)
       },
       stopAnimation () {
         if (this.task) {
@@ -139,16 +162,27 @@
       },
       runAnimation () {
         this.runFlapCardAnimation = true
-        setTimeout(() => {
+        this.timer1 = setTimeout(() => {
           this.startFlapCardAnimation()
           this.startPointAnimation()
         }, 300)
+        this.timer2 = setTimeout(() => {
+          this.stopAnimation()
+          this.runBookCardAnimation =true
+        }, 2500)
       },
-      startPointAnimation(){
+      startPointAnimation () {
         this.runPointAnimation = true
-        setTimeout(()=>{
+        setTimeout(() => {
           this.runPointAnimation = false
-        },750)
+        }, 750)
+      },
+      categoryText () {
+        if (this.data) {
+          return categoryText(this.data.category, this)
+        } else {
+          return ''
+        }
       }
     },
     created () {
@@ -170,6 +204,7 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import "../../assets/style/global";
   @import '../../assets/style/flapCard.scss';
+
   .flap-card-wrapper {
     position: absolute;
     top: 0;
@@ -181,6 +216,7 @@
     height: 100%;
     background: rgba(0, 0, 0, .6);
     @include center;
+
     .flap-card-bg {
       position: relative;
       width: px2rem(64);
@@ -189,9 +225,11 @@
       border-radius: px2rem(5);
       transform: scale(0);
       opacity: 0;
+
       &.animation {
         animation: flap-card-move 0.3s ease-in both;
       }
+
       @keyframes flap-card-move {
         0% {
           transform: scale(0);
@@ -210,6 +248,7 @@
           opacity: 1;
         }
       }
+
       .flap-card {
         position: absolute;
         top: 0;
@@ -220,10 +259,12 @@
         margin: auto;
         width: px2rem(48);
         height: px2rem(48);
+
         .flap-card-semi-circle {
           width: 100%;
           height: 100%;
           display: flex;
+
           .flap-card-semi-circle-left {
             flex: 0 0 50%;
             width: 50%;
@@ -235,6 +276,7 @@
             transform-origin: right;
             backface-visibility: hidden;
           }
+
           .flap-card-semi-circle-right {
             flex: 0 0 50%;
             width: 50%;
@@ -247,17 +289,20 @@
           }
         }
       }
+
       .point-wrapper {
         position: absolute;
         top: 50%;
         left: 50%;
         z-index: 2000;
         @include center;
+
         .point {
           @include absCenter;
           z-index: 3000;
           border-radius: 50%;
           transform: scale(0);
+
           &.animation {
             @for $i from 1 to length($moves) + 1 {
               &:nth-child(#{$i}) {
@@ -268,6 +313,7 @@
         }
       }
     }
+
     .book-card {
       position: relative;
       width: 65%;
@@ -276,7 +322,7 @@
       border-radius: px2rem(15);
       background: white;
       &.animation {
-       /*<!--animation: scale $bookShowTime ease-in both;-->*/
+        animation: scale 0.3s ease-in both;
         @keyframes scale {
           0% {
             transform: scale(0);
@@ -292,7 +338,7 @@
         width: 100%;
         height: 100%;
         margin-bottom: px2rem(30);
-        //@include columnTop;
+        @include columnTop;
         .img-wrapper {
           width: 100%;
           margin-top: px2rem(20);
@@ -336,7 +382,7 @@
           text-align: center;
           color: white;
           font-size: px2rem(14);
-          /*<!--background: $color-blue;-->*/
+          background: $color-blue;
         }
       }
     }
