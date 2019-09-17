@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/style/global.scss";
+@import "../../assets/styles/global.scss";
 .slide-content-wrapper {
   position: absolute;
   top: 0;

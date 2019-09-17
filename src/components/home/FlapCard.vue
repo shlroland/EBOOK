@@ -202,8 +202,8 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-  @import "../../assets/style/global";
-  @import '../../assets/style/flapCard.scss';
+  @import "../../assets/styles/global";
+  @import '../../assets/styles/flapCard.scss';
 
   .flap-card-wrapper {
     position: absolute;

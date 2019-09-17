@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/style/global.scss";
+@import "../../assets/styles/global.scss";
 .ebook {
   position: absolute;
   top: 0;

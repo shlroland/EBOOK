@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/style/global.scss";
+@import "../../assets/styles/global.scss";
 .menu-wrapper {
   position: absolute;
   bottom: 0;

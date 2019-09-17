@@ -237,7 +237,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../../assets/style/global.scss";
+  @import "../../assets/styles/global.scss";
 
   .ebook-reader {
     width: 100%;

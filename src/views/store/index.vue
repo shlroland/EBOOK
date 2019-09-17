@@ -12,7 +12,7 @@
 </script>
 
 <style scoped>
-@import "../../assets/style/global.scss";
+@import "../../assets/styles/global.scss";
   .store{
     width: 100%;
     height: 100%;

@@ -114,7 +114,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../assets/style/global";
+  @import "../../assets/styles/global";
 
   .search-bar {
     position: relative;

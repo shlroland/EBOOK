@@ -50,7 +50,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-  @import "../../assets/style/global.scss";
+  @import "../../assets/styles/global.scss";
 
   .scroll-wrapper {
     position: relative;

@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/style/global.scss";
+@import "../../assets/styles/global.scss";
 .ebook-popup-list {
   position: absolute;
   bottom: 0;

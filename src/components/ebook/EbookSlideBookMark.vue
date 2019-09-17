@@ -41,7 +41,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-  @import "../../assets/style/global";
+  @import "../../assets/styles/global";
 
   .ebook-slide-bookmark {
     width: 100%;
