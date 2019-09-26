@@ -22,6 +22,7 @@
                  :placeholder="$t('home.hint')"
                  v-model="searchText"
                  @click="showHotSearch"
+                 @keyup.13.exact="search"
           >
         </div>
       </div>
@@ -85,11 +86,26 @@
         })
       },
       back () {
-        if (this.offsetY) {
-          this.show
+        if (this.offsetY > 0) {
+          this.showShadow()
+        }else {
+          this.hideShadow()
         }
-        this.hideHotSearch()
-        this.showTitle()
+        if (this.hotSearchVisible) {
+          this.hideHotSearch()
+        }else {
+          this.$router.push('/store/shelf')
+        }
+        // this.hideHotSearch()
+        // this.showTitle()
+      },
+      search(){
+        this.$router.push({
+          path: '/store/list',
+          query: {
+            keyword: this.searchText
+          }
+        })
       }
     },
     watch: {

@@ -34,7 +34,9 @@ export default {
 
   },
   methods: {
-    back () { }
+    back () {
+      this.$router.go(-1)
+    }
   }
 }
 </script>

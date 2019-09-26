@@ -1,3 +1,68 @@
+export function computedId (list) {
+  return list.map((book, index) => {
+    if (book.type !== 3) {
+      book.id = index + 1
+      if (book.itemList) {
+        book.itemList = computedId(book.itemList)
+      }
+    }
+    return book
+  })
+}
+
+export function gotoBookDetail (vue, book) {
+  vue.$router.push({
+    path: '/store/detail',
+    query: {
+      fileName: book.fileName,
+      category: book.categoryText
+    }
+  })
+}
+
+export function appendAddToShelf (list) {
+  list.push({
+    id: -1,
+    type: 3
+  })
+  return list
+}
+
+export function gotoStoreHome (vue) {
+  vue.$router.push({
+    path: '/store/home',
+  })
+}
+
+export function removeAddFromShelf (list) {
+  return list.filter(item => item.type !== 3)
+}
+
+export const categoryList = {
+  'ComputerScience': 1,
+  'SocialSciences': 2,
+  'Economics': 3,
+  'Education': 4,
+  'Engineering': 5,
+  'Environment': 6,
+  'Geography': 7,
+  'History': 8,
+  'Laws': 9,
+  'LifeSciences': 10,
+  'Literature': 11,
+  'Biomedicine': 12,
+  'BusinessandManagement': 13,
+  'EarthSciences': 14,
+  'MaterialsScience': 15,
+  'Mathematics': 16,
+  'MedicineAndPublicHealth': 17,
+  'Philosophy': 18,
+  'Physics': 19,
+  'PoliticalScienceAndInternationalRelations': 20,
+  'Psychology': 21,
+  'Statistics': 22
+}
+
 export const flapCardList = [
   {
     r: 255,
@@ -56,7 +121,7 @@ export const flapCardList = [
   }
 ]
 
-export function getCategoryName(id) {
+export function getCategoryName (id) {
   switch (id) {
     case 1:
       return 'ComputerScience'
@@ -105,7 +170,7 @@ export function getCategoryName(id) {
   }
 }
 
-export function categoryText(category, vue) {
+export function categoryText (category, vue) {
   switch (category) {
     case 1:
       return vue.$t('category.computerScience')

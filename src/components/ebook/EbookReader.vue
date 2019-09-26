@@ -25,6 +25,7 @@
     getLocation
   } from '../../utils/LocalStorage'
   import Epub from 'epubjs'
+  import { getLocalForage } from '../../utils/localforage'
 
   global.ePub = Epub
   export default {
@@ -207,9 +208,7 @@
           this.setNavigation(navItems)
         })
       },
-      initEpub () {
-        const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
-        const url = baseUrl + this.fileName + '.epub'
+      initEpub (url) {
         this.book = new Epub(url)
         this.setCurrentBook(this.book)
         this.initRendition()
@@ -228,9 +227,23 @@
     },
     components: {},
     mounted () {
-      const fileName = this.$route.params.fileName
-      this.setFileName(fileName).then(() => {
-        this.initEpub()
+      const books = this.$route.params.fileName.split('|')
+      const fileName = books[1]
+      console.log(books)
+      getLocalForage(fileName, (err, blob) => {
+        if (!err && blob) {
+          console.log('找到离线')
+          this.setFileName(books.join('/')).then(() => {
+            console.log(blob)
+            this.initEpub(blob)
+          })
+        } else {
+          console.log('在线获取')
+          this.setFileName(this.$route.params.fileName.split('|').join('/')).then(() => {
+            const url = process.env.VUE_APP_RES_URL + '/epub/' + this.fileName + '.epub'
+            this.initEpub(url)
+          })
+        }
       })
     }
   }
