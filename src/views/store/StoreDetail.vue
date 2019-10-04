@@ -81,12 +81,15 @@
   import { detail } from '../../api/store'
   import { px2rem, realPx } from '../../utils/utils'
   import Epub from 'epubjs'
-  import { storeHomeMixin } from '../../utils/mixin'
+  import { storeShelfMixin } from '../../utils/mixin'
+  import { getLocalForage } from '../../utils/localforage'
+  import { removeFromBookShelf, addToShelf } from '../../utils/store'
+  import { getBookShelf, saveBookShelf } from '../../utils/LocalStorage'
 
   global.ePub = Epub
 
   export default {
-    mixins: [storeHomeMixin],
+    mixins: [storeShelfMixin],
     components: {
       DetailTitle,
       Scroll,
@@ -94,38 +97,38 @@
       Toast
     },
     computed: {
-      desc() {
+      desc () {
         if (this.description) {
           return this.description.substring(0, 100)
         } else {
           return ''
         }
       },
-      flatNavigation() {
+      flatNavigation () {
         if (this.navigation) {
           return Array.prototype.concat.apply([], Array.prototype.concat.apply([], this.doFlatNavigation(this.navigation.toc)))
         } else {
           return []
         }
       },
-      lang() {
+      lang () {
         return this.metadata ? this.metadata.language : '-'
       },
-      isbn() {
+      isbn () {
         return this.metadata ? this.metadata.identifier : '-'
       },
-      publisher() {
+      publisher () {
         return this.metadata ? this.metadata.publisher : '-'
       },
-      title() {
+      title () {
         return this.metadata ? this.metadata.title : ''
       },
-      author() {
+      author () {
         return this.metadata ? this.metadata.creator : ''
       },
-      inBookShelf() {
+      inBookShelf () {
         if (this.bookItem && this.shelfList) {
-          const flatShelf = (function flatten(arr) {
+          const flatShelf = (function flatten (arr) {
             return [].concat(...arr.map(v => v.itemList ? [v, ...flatten(v.itemList)] : v))
           })(this.shelfList).filter(item => item.type === 1)
           const book = flatShelf.filter(item => item.fileName === this.bookItem.fileName)
@@ -135,7 +138,7 @@
         }
       }
     },
-    data() {
+    data () {
       return {
         bookItem: null,
         book: null,
@@ -154,41 +157,59 @@
       }
     },
     methods: {
-      // addOrRemoveShelf() {
-      //   if (this.inBookShelf) {
-      //     this.setShelfList(removeFromBookShelf(this.bookItem))
-      //       .then(() => {
-      //         // 将书架数据保存到LocalStorage
-      //         saveBookShelf(this.shelfList)
-      //       })
-      //   } else {
-      //     // 如果电子书不存在于书架，则添加电子书到书架
-      //     addToShelf(this.bookItem)
-      //     this.setShelfList(getBookShelf())
-      //   }
-      // },
-      showToast(text) {
+      addOrRemoveShelf () {
+        if (this.inBookShelf) {
+          this.setShelfList(removeFromBookShelf(this.bookItem))
+            .then(() => {
+              // 将书架数据保存到LocalStorage
+              saveBookShelf(this.shelfList)
+            })
+        } else {
+          // 如果电子书不存在于书架，则添加电子书到书架
+          addToShelf(this.bookItem)
+          this.setShelfList(getBookShelf())
+        }
+      },
+      showToast (text) {
         this.toastText = text
         this.$refs.toast.show()
       },
-      readBook() {
+      readBook () {
+        this.$router.push({
+          path: `/ebook/${this.bookItem.categoryText}|${this.fileName}`
+        })
+      },
+      trialListening () {
+        getLocalForage(this.bookItem.fileName, (err, blob) => {
+          if (!err && blob instanceof Blob) {
+            this.$router.push({
+              path: '/store/speaking',
+              query: {
+                fileName: this.bookItem.fileName
+              }
+            })
+          } else {
+            this.$router.push({
+              path: '/store/speaking',
+              query: {
+                fileName: this.bookItem.fileName,
+                opf: this.opf
+              }
+            })
+          }
+        })
+      },
+      read (item) {
         this.$router.push({
           path: `/ebook/${this.categoryText}|${this.fileName}`
         })
       },
-      trialListening() {
-      },
-      read(item) {
-        this.$router.push({
-          path: `/ebook/${this.categoryText}|${this.fileName}`
-        })
-      },
-      itemStyle(item) {
+      itemStyle (item) {
         return {
           marginLeft: (item.deep - 1) * px2rem(20) + 'rem'
         }
       },
-      doFlatNavigation(content, deep = 1) {
+      doFlatNavigation (content, deep = 1) {
         const arr = []
         content.forEach(item => {
           item.deep = deep
@@ -199,11 +220,11 @@
         })
         return arr
       },
-      downloadBook() {
+      downloadBook () {
         const opf = `${process.env.VUE_APP_EPUB_URL}/${this.bookItem.categoryText}/${this.bookItem.fileName}/OEBPS/package.opf`
         this.parseBook(opf)
       },
-      parseBook(url) {
+      parseBook (url) {
         this.book = new Epub(url)
         this.book.loaded.metadata.then(metadata => {
           this.metadata = metadata
@@ -226,7 +247,7 @@
           }
         })
       },
-      init() {
+      init () {
         this.fileName = this.$route.query.fileName
         this.categoryText = this.$route.query.category
         if (this.fileName) {
@@ -249,10 +270,10 @@
           })
         }
       },
-      back() {
+      back () {
         this.$router.go(-1)
       },
-      display(location) {
+      display (location) {
         if (this.$refs.preview) {
           if (!this.rendition) {
             this.rendition = this.book.renderTo('preview', {
@@ -268,7 +289,7 @@
           }
         }
       },
-      onScroll(offsetY) {
+      onScroll (offsetY) {
         if (offsetY > realPx(42)) {
           this.$refs.title.showShadow()
         } else {
@@ -276,9 +297,11 @@
         }
       }
     },
-    mounted() {
+    mounted () {
       this.init()
-      console.log(this.categoryText,this.fileName)
+      if (!this.shelfList || this.shelfList.length === 0) {
+        this.getShelfList()
+      }
     }
   }
 </script>
@@ -289,45 +312,56 @@
   .book-detail {
     width: 100%;
     background: white;
+
     .content-wrapper {
       width: 100%;
+
       .book-detail-content-wrapper {
         width: 100%;
         border-bottom: px2rem(1) solid #eee;
         box-sizing: border-box;
+
         .book-detail-content-title {
           font-size: px2rem(20);
           font-weight: bold;
           padding: px2rem(20) px2rem(15) px2rem(10) px2rem(15);
           box-sizing: border-box;
         }
+
         .book-detail-content-list-wrapper {
           padding: px2rem(10) px2rem(15);
           box-sizing: border-box;
+
           .loading-text-wrapper {
             width: 100%;
+
             .loading-text {
               font-size: px2rem(14);
               color: #666;
             }
           }
+
           .book-detail-content-row {
             display: flex;
             box-sizing: border-box;
             margin-bottom: px2rem(10);
+
             .book-detail-content-label {
               flex: 0 0 px2rem(70);
               font-size: px2rem(14);
               color: #666;
             }
+
             .book-detail-content-text {
               flex: 1;
               font-size: px2rem(14);
               color: #333;
             }
           }
+
           #preview {
           }
+
           .book-detail-content-item-wrapper {
             .book-detail-content-item {
               padding: px2rem(15) 0;
@@ -335,12 +369,15 @@
               line-height: px2rem(16);
               color: #666;
               border-bottom: px2rem(1) solid #eee;
+
               &:last-child {
                 border-bottom: none;
               }
+
               .book-detail-content-navigation-text {
                 width: 100%;
                 @include ellipsis;
+
                 &.is-sub {
                   color: #666;
                 }
@@ -349,15 +386,18 @@
           }
         }
       }
+
       .audio-wrapper {
         width: 100%;
         padding: px2rem(15);
         box-sizing: border-box;
+
         #audio {
           width: 100%;
         }
       }
     }
+
     .bottom-wrapper {
       position: fixed;
       bottom: 0;
@@ -367,19 +407,23 @@
       width: 100%;
       height: px2rem(52);
       box-shadow: 0 px2rem(-2) px2rem(2) rgba(0, 0, 0, .1);
+
       .bottom-btn {
         flex: 1;
         color: $color-blue;
         font-weight: bold;
         font-size: px2rem(14);
         @include center;
+
         &:active {
           color: $color-blue-transparent;
         }
+
         .icon-check {
           margin-right: px2rem(5);
         }
       }
+
       &.hide-shadow {
         box-shadow: none;
       }

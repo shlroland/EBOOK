@@ -184,7 +184,7 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import "../../assets/styles/global";
-
+  $color-green: rgb(59, 201, 22);
   .book-speak-mask-wrapper {
     position: fixed;
     left: 0;

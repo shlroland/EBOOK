@@ -70,13 +70,13 @@
 <script type="text/ecmascript-6">
   import DetailTitle from '../../components/detail/DetaiTitle'
   import BookInfo from '../../components/detail/BookInfo'
-  import Scroll from '../../components/common/Scroll'
+  import Scroll from '../../components/common/scroll'
   import SpeakPlaying from '../../components/speak/SpeakPlaying'
   import Bottom from '../../components/speak/SpeakBottom'
   import SpeakWindow from '../../components/speak/SpeakMask'
   import { findBook, getCategoryName } from '../../utils/store'
   import { download, flatList } from '../../api/store'
-  import { getLocalForage } from '../../utils/localForage'
+  import { getLocalForage } from '../../utils/localforage'
   import { realPx } from '../../utils/utils'
   import Epub from 'epubjs'
 
