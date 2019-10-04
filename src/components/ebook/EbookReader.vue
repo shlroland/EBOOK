@@ -79,7 +79,7 @@
         e.preventDefault()
         e.stopPropagation()
       },
-      moveEnd (e) {
+      moveEnd () {
         this.setOffsetY(0)
         this.firstOffsetY = null
       },
@@ -218,7 +218,8 @@
           .then(() => {
             return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
           })
-          .then((locations) => {this.navigation.forEach(nav => {
+          .then((locations) => {
+ this.navigation.forEach(nav => {
             nav.pagelist = []
           })
             locations.forEach(item => {

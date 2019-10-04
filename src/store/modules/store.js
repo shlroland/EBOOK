@@ -10,28 +10,28 @@ const store = {
     currentType: 1
   },
   mutations: {
-    SET_HOT_SEARCH_OFFSETY(state, y) {
+    SET_HOT_SEARCH_OFFSETY (state, y) {
       state.hotSearchOffsetY = y
     },
-    SET_FLAP_CARD_VISIBLE(state, visible) {
+    SET_FLAP_CARD_VISIBLE (state, visible) {
       state.flapCardVisible = visible
     },
-    SET_IS_EDIT_MODE(state, isEditMode) {
+    SET_IS_EDIT_MODE (state, isEditMode) {
       state.isEditMode = isEditMode
     },
-    SET_SHELF_LIST(state, list) {
+    SET_SHELF_LIST (state, list) {
       state.shelfList = list
     },
-    SET_SHELF_SELECTED(state, selected) {
+    SET_SHELF_SELECTED (state, selected) {
       state.shelfSelected = selected
     },
-    SET_SHELF_TITLE_VISIBLE(state, visible) {
+    SET_SHELF_TITLE_VISIBLE (state, visible) {
       state.shelfTitleVisible = visible
     },
-    SET_SHELF_CATEGORY(state, category) {
+    SET_SHELF_CATEGORY (state, category) {
       state.shelfCategory = category
     },
-    SET_CURRENT_TYPE(state, type) {
+    SET_CURRENT_TYPE (state, type) {
       state.currentType = type
     }
   }

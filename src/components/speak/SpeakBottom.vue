@@ -32,10 +32,10 @@
       playInfo: Object
     },
     methods: {
-      togglePlay() {
+      togglePlay () {
         this.$parent.togglePlay()
       },
-      onPlayingCardClick() {
+      onPlayingCardClick () {
         this.$emit('onPlayingCardClick')
       }
     }

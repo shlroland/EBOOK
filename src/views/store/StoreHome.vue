@@ -55,7 +55,7 @@
       Category
     },
     methods: {
-      onScroll(offsetY) {
+      onScroll (offsetY) {
         // 设置vuex的offsetY
         // SearchBar组件会进行监听
         this.setOffsetY(offsetY)

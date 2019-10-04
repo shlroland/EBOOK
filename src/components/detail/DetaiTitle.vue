@@ -22,22 +22,22 @@
         default: true
       }
     },
-    data() {
+    data () {
       return {
         ifHideShadow: true
       }
     },
     methods: {
-      showBookShelf() {
+      showBookShelf () {
         this.$router.push('/store/shelf')
       },
-      showShadow() {
+      showShadow () {
         this.ifHideShadow = false
       },
-      hideShadow() {
+      hideShadow () {
         this.ifHideShadow = true
       },
-      back() {
+      back () {
         this.$emit('back')
       }
     }

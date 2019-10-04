@@ -39,12 +39,12 @@
       ShelfFooter,
       ShelfList,
       ShelfTitle,
-      Scroll,
+      Scroll
     },
     methods: {
       onScroll (offsetY) {
         this.setOffsetY(offsetY)
-      },
+      }
     },
     watch: {
       isEditMode (newVal) {

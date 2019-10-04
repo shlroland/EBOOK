@@ -20,17 +20,17 @@
         default: 1500
       }
     },
-    data() {
+    data () {
       return {
         visible: false,
         showText: ''
       }
     },
     methods: {
-      hide() {
+      hide () {
         this.visible = false
       },
-      show() {
+      show () {
         this.updateText(this.text)
         clearTimeout(this.task)
         this.task = null
@@ -39,13 +39,13 @@
           this.visible = false
         }, this.timeout)
       },
-      continueShow() {
+      continueShow () {
         this.updateText(this.text)
         clearTimeout(this.task)
         this.task = null
         this.visible = true
       },
-      updateText(text){
+      updateText (text) {
         this.showText = text
       }
     }

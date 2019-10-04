@@ -92,31 +92,31 @@
       SpeakWindow
     },
     computed: {
-      currentMinute() {
+      currentMinute () {
         const m = Math.floor(this.currentPlayingTime / 60)
         return m < 10 ? '0' + m : m
       },
-      currentSecond() {
+      currentSecond () {
         const s = Math.floor(this.currentPlayingTime - parseInt(this.currentMinute) * 60)
         return s < 10 ? '0' + s : s
       },
-      totalMinute() {
+      totalMinute () {
         const m = Math.floor(this.totalPlayingTime / 60)
         return m < 10 ? '0' + m : m
       },
-      totalSecond() {
+      totalSecond () {
         const s = Math.floor(this.totalPlayingTime - parseInt(this.totalMinute) * 60)
         return s < 10 ? '0' + s : s
       },
-      leftMinute() {
+      leftMinute () {
         const m = Math.floor((this.totalPlayingTime - this.currentPlayingTime) / 60)
         return m < 10 ? '0' + m : m
       },
-      leftSecond() {
+      leftSecond () {
         const s = Math.floor((this.totalPlayingTime - this.currentPlayingTime) - parseInt(this.leftMinute) * 60)
         return s < 10 ? '0' + s : s
       },
-      playInfo() {
+      playInfo () {
         if (this.audioCanPlay) {
           return {
             currentMinute: this.currentMinute,
@@ -130,50 +130,50 @@
           return null
         }
       },
-      lang() {
+      lang () {
         return this.metadata ? this.metadata.language : ''
       },
-      disableScroll() {
+      disableScroll () {
         if (this.$refs.speakWindow) {
           return this.$refs.speakWindow.visible
         } else {
           return false
         }
       },
-      showPlay() {
+      showPlay () {
         return this.playingIndex >= 0
       },
-      scrollBottom() {
+      scrollBottom () {
         return this.showPlay ? 116 : 52
       },
-      chapter() {
+      chapter () {
         return this.flatNavigation[this.playingIndex]
       },
-      desc() {
+      desc () {
         if (this.description) {
           return this.description.substring(0, 100)
         } else {
           return ''
         }
       },
-      flatNavigation() {
+      flatNavigation () {
         if (this.navigation) {
           return Array.prototype.concat.apply([], Array.prototype.concat.apply([], this.doFlatNavigation(this.navigation.toc)))
         } else {
           return []
         }
       },
-      category() {
+      category () {
         return this.bookItem ? getCategoryName(this.bookItem.category) : ''
       },
-      title() {
+      title () {
         return this.metadata ? this.metadata.title : ''
       },
-      author() {
+      author () {
         return this.metadata ? this.metadata.creator : ''
       }
     },
-    data() {
+    data () {
       return {
         bookItem: null,
         book: null,
@@ -199,7 +199,7 @@
       }
     },
     methods: {
-      createVoice(text) {
+      createVoice (text) {
         const xmlhttp = new XMLHttpRequest()
         xmlhttp.open('GET', `${process.env.VUE_APP_VOICE_URL}/voice?text=${text}&lang=${this.lang.toLowerCase()}`, false)
         xmlhttp.send()
@@ -247,7 +247,7 @@
         })
         */
       },
-      togglePlay() {
+      togglePlay () {
         if (!this.isPlaying) {
           if (this.playStatus === 0) {
             this.play()
@@ -258,7 +258,7 @@
           this.pausePlay()
         }
       },
-      speak(item, index) {
+      speak (item, index) {
         this.resetPlay()
         this.playingIndex = index
         this.$nextTick(() => {
@@ -287,46 +287,46 @@
           })
         }
       },
-      resetPlay() {
+      resetPlay () {
         if (this.playStatus === 1) {
           this.pausePlay()
         }
         this.isPlaying = false
         this.playStatus = 0
       },
-      play() {
+      play () {
         this.createVoice(this.paragraph)
       },
-      continuePlay() {
+      continuePlay () {
         this.$refs.audio.play().then(() => {
           this.$refs.speakPlaying[0].startAnimation()
           this.isPlaying = true
           this.playStatus = 1
         })
       },
-      pausePlay() {
+      pausePlay () {
         this.$refs.audio.pause()
         this.$refs.speakPlaying[0].stopAnimation()
         this.isPlaying = false
         this.playStatus = 2
       },
-      onAudioEnded() {
+      onAudioEnded () {
         this.resetPlay()
         this.currentPlayingTime = this.$refs.audio.currentTime
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)
         this.$refs.speakWindow.refreshProgress(percent)
       },
-      onTimeUpdate() {
+      onTimeUpdate () {
         this.currentPlayingTime = this.$refs.audio.currentTime
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)
         this.$refs.speakWindow.refreshProgress(percent)
       },
-      onCanPlay() {
+      onCanPlay () {
         this.audioCanPlay = true
         this.currentPlayingTime = this.$refs.audio.currentTime
         this.totalPlayingTime = this.$refs.audio.duration
       },
-      findBookFromList(fileName) {
+      findBookFromList (fileName) {
         flatList().then(response => {
           if (response.status === 200) {
             const bookList = response.data.data.filter(item => item.fileName === fileName)
@@ -337,7 +337,7 @@
           }
         })
       },
-      init() {
+      init () {
         const fileName = this.$route.query.fileName
         if (!this.bookItem) {
           this.bookItem = findBook(fileName)
@@ -360,7 +360,7 @@
           this.findBookFromList(fileName)
         }
       },
-      downloadBook(fileName) {
+      downloadBook (fileName) {
         download(
           this.bookItem,
           () => {
@@ -372,7 +372,7 @@
             })
           })
       },
-      parseBook(blob) {
+      parseBook (blob) {
         this.book = new Epub(blob)
         this.book.loaded.metadata.then(metadata => {
           this.metadata = metadata
@@ -393,20 +393,20 @@
         })
         this.display()
       },
-      back() {
+      back () {
         this.$router.go(-1)
       },
-      onScroll(offsetY) {
+      onScroll (offsetY) {
         if (offsetY > realPx(42)) {
           this.$refs.title.showShadow()
         } else {
           this.$refs.title.hideShadow()
         }
       },
-      toggleContent() {
+      toggleContent () {
         this.ifShowContent = !this.ifShowContent
       },
-      display() {
+      display () {
         const height = window.innerHeight * 0.9 - realPx(40) - realPx(54) - realPx(46) - realPx(48) - realPx(60) - realPx(44)
         this.rendition = this.book.renderTo('read', {
           width: window.innerWidth,
@@ -415,7 +415,7 @@
         })
         this.rendition.display()
       },
-      doFlatNavigation(content, deep = 1) {
+      doFlatNavigation (content, deep = 1) {
         const arr = []
         content.forEach(item => {
           item.deep = deep
@@ -426,17 +426,17 @@
         })
         return arr
       },
-      showToast(text) {
+      showToast (text) {
         this.simpleToast(text)
       },
-      onPlayingCardClick() {
+      onPlayingCardClick () {
         this.$refs.speakWindow.show()
       },
-      updateText(text) {
+      updateText (text) {
         this.paragraph = text
       }
     },
-    mounted() {
+    mounted () {
       this.init()
     }
   }

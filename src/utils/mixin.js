@@ -128,7 +128,7 @@ export const storeHomeMixin = {
     ]),
     showBookDetail (book) {
       gotoBookDetail(this, book)
-    },
+    }
   }
 }
 export const storeShelfMixin = {

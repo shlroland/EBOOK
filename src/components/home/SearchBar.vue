@@ -18,12 +18,12 @@
         <div class="search-bar-blank" :class="{'hide-title':!titleVisible}"></div>
         <div class="search-bar-input">
           <span class="icon-search icon"></span>
-          <input type="text"
-                 :placeholder="$t('home.hint')"
-                 v-model="searchText"
-                 @click="showHotSearch"
-                 @keyup.13.exact="search"
-          >
+            <input type="text"
+                   :placeholder="$t('home.hint')"
+                   v-model="searchText"
+                   @click="showHotSearch"
+                   @keyup.13.exact="search"
+            >
         </div>
       </div>
     </div>
@@ -34,13 +34,11 @@
 <script>
   import { storeHomeMixin } from '../../utils/mixin'
   import HotSearchList from './HotSearchList'
-  import FlapCard from './FlapCard'
 
   export default {
     mixins: [storeHomeMixin],
     components: {
       HotSearchList,
-      FlapCard
     },
     data () {
       return {
@@ -88,18 +86,18 @@
       back () {
         if (this.offsetY > 0) {
           this.showShadow()
-        }else {
+        } else {
           this.hideShadow()
         }
         if (this.hotSearchVisible) {
           this.hideHotSearch()
-        }else {
+        } else {
           this.$router.push('/store/shelf')
         }
         // this.hideHotSearch()
         // this.showTitle()
       },
-      search(){
+      search () {
         this.$router.push({
           path: '/store/list',
           query: {

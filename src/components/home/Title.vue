@@ -12,7 +12,7 @@
       btn: String
     },
     methods: {
-      click() {
+      click () {
         this.$emit('onClick')
       }
     }

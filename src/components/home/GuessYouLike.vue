@@ -4,7 +4,7 @@
     <div class="guess-you-like-list">
       <div class="guess-you-like-item" v-for="(item, index) in showData" :key="index" @click="showBookDetail(item)">
         <div class="img-wrapper">
-          <img class="img" :src="item.cover">
+          <img class="img" alt="cover" :src="item.cover">
         </div>
         <div class="content-wrapper">
           <div class="title title-big" ref="title">{{item.title}}</div>
@@ -30,15 +30,15 @@
       data: Array
     },
     watch: {
-      data(v) {
+      data (v) {
         this.total = v.length / 3
       }
     },
     computed: {
-      width() {
+      width () {
         return window.innerWidth - realPx(20) - realPx(60) + 'px'
       },
-      showData() {
+      showData () {
         if (this.data) {
           return [
             this.data[this.index],
@@ -50,21 +50,21 @@
         }
       }
     },
-    data() {
+    data () {
       return {
         index: 0,
         total: 0
       }
     },
     methods: {
-      change() {
+      change () {
         if (this.index + 1 >= this.total) {
           this.index = 0
         } else {
           this.index++
         }
       },
-      resultText(item) {
+      resultText (item) {
         if (item && item.type && item.result) {
           switch (item.type) {
             case 1:
@@ -76,7 +76,7 @@
           }
         }
       },
-      resize() {
+      resize () {
         this.$nextTick(() => {
           this.$refs.title.forEach(item => {
             item.style.width = this.width

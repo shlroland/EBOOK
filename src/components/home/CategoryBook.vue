@@ -4,7 +4,7 @@
     <div class="category-book-list">
       <div class="category-book-item" v-for="(item, index) in data.list" :key="index" @click="showBookDetail(item)">
         <div class="img-wrapper">
-          <img class="img" :src="item.cover">
+          <img class="img" alt="cover" :src="item.cover">
         </div>
         <div class="content-wrapper">
           <div class="title title-small" ref="title">{{item.title}}</div>
@@ -29,7 +29,7 @@
       data: Object
     },
     methods: {
-      showBookCategory() {
+      showBookCategory () {
         this.$router.push({
           path: '/store/list',
           query: {
@@ -38,7 +38,7 @@
           }
         })
       },
-      categoryText(category) {
+      categoryText (category) {
         return categoryText(category, this)
       }
     }

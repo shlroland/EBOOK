@@ -12,7 +12,7 @@
       number: Number
     },
     computed: {
-      styles() {
+      styles () {
         const styles = new Array(this.number)
         for (let i = 0; i < styles.length; i++) {
           styles[i] = {
@@ -23,19 +23,19 @@
       }
     },
     methods: {
-      startAnimation() {
+      startAnimation () {
         this.task = setInterval(() => {
           this.$refs.playingItem.forEach(item => {
             item.style.height = px2rem(this.random()) + 'rem'
           })
         }, 200)
       },
-      stopAnimation() {
+      stopAnimation () {
         if (this.task) {
           clearInterval(this.task)
         }
       },
-      random() {
+      random () {
         return Math.ceil(Math.random() * 10)
       }
     }

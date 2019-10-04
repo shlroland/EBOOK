@@ -10,8 +10,8 @@
           </div>
           <div class="img-wrapper">
             <div class="img-group">
-              <img class="img" :src="item.img1">
-              <img class="img2" :src="item.img2">
+              <img class="img" alt="img" :src="item.img1">
+              <img class="img2" alt="img" :src="item.img2">
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
       data: Array
     },
     methods: {
-      showBookCategory(item) {
+      showBookCategory (item) {
         this.$router.push({
           path: '/store/list',
           query: {
@@ -41,10 +41,10 @@
           }
         })
       },
-      categoryText(category) {
+      categoryText (category) {
         return categoryText(category, this)
       },
-      showBookList() {
+      showBookList () {
         this.$router.push('/store/list')
       }
     }

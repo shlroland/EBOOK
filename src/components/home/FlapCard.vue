@@ -91,7 +91,7 @@
         if (this.timer1) {
           clearTimeout(this.timer1)
         }
-        if (this.timer2){
+        if (this.timer2) {
           clearTimeout(this.timer2)
         }
       },
@@ -168,7 +168,7 @@
         }, 300)
         this.timer2 = setTimeout(() => {
           this.stopAnimation()
-          this.runBookCardAnimation =true
+          this.runBookCardAnimation = true
         }, 2500)
       },
       startPointAnimation () {

@@ -90,7 +90,7 @@
       isPlaying: Boolean,
       playInfo: Object
     },
-    data() {
+    data () {
       return {
         visible: false,
         speakCardVisible: false,
@@ -99,11 +99,11 @@
       }
     },
     methods: {
-      refreshProgress(p) {
+      refreshProgress (p) {
         this.progress = p
         this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
       },
-      updateText(promise) {
+      updateText (promise) {
         promise.then(() => {
           const currentPage = this.rendition.currentLocation()
           const cfibase = this.section.cfiBase
@@ -120,10 +120,10 @@
           })
         })
       },
-      togglePlay() {
+      togglePlay () {
         this.$parent.togglePlay()
       },
-      prev() {
+      prev () {
         if (this.currentSectionIndex > 1) {
           this.updateText(this.rendition.prev())
           this.$emit('update:currentSectionIndex', this.currentSectionIndex - 1)
@@ -133,7 +133,7 @@
           }, 500)
         }
       },
-      next() {
+      next () {
         if (this.currentSectionIndex < this.currentSectionTotal) {
           this.updateText(this.rendition.next())
           this.$emit('update:currentSectionIndex', this.currentSectionIndex + 1)
@@ -143,7 +143,7 @@
           }, 500)
         }
       },
-      display() {
+      display () {
         if (!this.rendition) {
           this.rendition = this.book.renderTo('book-read', {
             width: window.innerWidth > 640 ? 640 : window.innerWidth,
@@ -155,17 +155,17 @@
           this.displayed = this.rendition.display(this.section.href)
         }
       },
-      onProgressChange(progress) {
+      onProgressChange (progress) {
       },
-      onProgressInput(progress) {
+      onProgressInput (progress) {
         this.progress = progress
         this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
       },
-      hide() {
+      hide () {
         this.speakCardVisible = false
         this.visible = false
       },
-      show() {
+      show () {
         this.visible = true
         this.speakCardVisible = true
         this.refresh()
@@ -173,7 +173,7 @@
           this.display()
         })
       },
-      refresh() {
+      refresh () {
         this.readHeight = window.innerHeight * 0.9 - realPx(40) - realPx(54) - realPx(46) - realPx(48) - realPx(60) - realPx(44)
         // console.log(this.readHeight)
         this.$refs.bookWrapper.style.height = this.readHeight + 'px'

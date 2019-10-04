@@ -23,7 +23,6 @@
   import { storeShelfMixin } from '../../utils/mixin'
   import ShelfFooter from '../../components/shelf/ShelfFooter'
 
-
   export default {
     mixins: [storeShelfMixin],
     data () {
@@ -41,7 +40,7 @@
     methods: {
       onScroll (offsetY) {
         this.setOffsetY(offsetY)
-      },
+      }
     },
     watch: {
       isEditMode (newVal) {

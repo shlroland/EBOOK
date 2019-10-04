@@ -1,28 +1,28 @@
 import axios from 'axios'
 import { setLocalForage } from '../utils/localforage'
 
-export function flatList() {
+export function flatList () {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BOOK_URL}/book/flat-list`
   })
 }
 
-export function shelf() {
+export function shelf () {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BASE_URL}/book/shelf`
   })
 }
 
-export function home() {
+export function home () {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BASE_URL}/book/home`
   })
 }
 
-export function detail(book) {
+export function detail (book) {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BOOK_URL}/book/detail`,
@@ -32,14 +32,14 @@ export function detail(book) {
   })
 }
 
-export function list() {
+export function list () {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BASE_URL}/book/list`
   })
 }
 
-export function download(book, onSucess, onError, onProgress) {
+export function download (book, onSucess, onError, onProgress) {
   if (onProgress == null) {
     onProgress = onError
     onError = null

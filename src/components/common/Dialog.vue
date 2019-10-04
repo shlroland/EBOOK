@@ -23,16 +23,16 @@
     props: {
       title: String
     },
-    data() {
+    data () {
       return {
         visible: false
       }
     },
     methods: {
-      show() {
+      show () {
         this.visible = true
       },
-      hide() {
+      hide () {
         this.visible = false
       }
     }

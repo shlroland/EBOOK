@@ -127,7 +127,7 @@
       },
       onComplete () {
         this.hidePopup()
-        this.setShelfList(this.shelfList.filter(book => book.id !== this.shelfCategory.id)).then(()=>{
+        this.setShelfList(this.shelfList.filter(book => book.id !== this.shelfCategory.id)).then(() => {
           saveBookShelf(this.shelfList)
           this.$router.go(-1)
           this.setIsEditMode(false)

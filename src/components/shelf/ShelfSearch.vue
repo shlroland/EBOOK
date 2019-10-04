@@ -6,13 +6,13 @@
           <span class="icon-search"></span>
         </div>
         <div class="search-input-wrapper">
-          <input
-            type="text"
-            class="search-input"
-            :placeholder="$t('shelf.search')"
-            @click="onSearchClick"
-            v-model="searchText"
-          >
+            <input
+              type="text"
+              class="search-input"
+              :placeholder="$t('shelf.search')"
+              @click="onSearchClick"
+              v-model="searchText"
+            >
         </div>
         <div class="icon-clear-wrapper" @click="clearSearchText" v-show="searchText.length > 0">
           <span class="icon-close-circle-fill"></span>
@@ -38,7 +38,7 @@
 
 <script>
   import { setLocalStorage } from '../../utils/LocalStorage'
-import {storeShelfMixin} from '../../utils/mixin'
+import { storeShelfMixin } from '../../utils/mixin'
 
   export default {
     name: 'ShelfSearch',
@@ -98,7 +98,7 @@ import {storeShelfMixin} from '../../utils/mixin'
     },
     watch: {
       offsetY (offsetY) {
-        this.ifHideShadow = !(offsetY > 0 && this.ifInputClicked);
+        this.ifHideShadow = !(offsetY > 0 && this.ifInputClicked)
       }
     }
   }
