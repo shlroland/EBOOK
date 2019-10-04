@@ -1,7 +1,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { themeList, addCss, removeAllCss, getReadTimeByMinute } from './book'
 import { getBookmark, saveLocation, getBookShelf, saveBookShelf } from './LocalStorage'
-import { gotoBookDetail, appendAddToShelf, computedId, removeAddFromShelf } from './store'
+import { gotoBookDetail, appendAddToShelf, computeId, removeAddFromShelf } from './store'
 import { shelf } from '../api/store'
 
 export const ebookMixin = {
@@ -74,7 +74,7 @@ export const ebookMixin = {
       const currentLocation = this.currentBook.rendition.currentLocation()
       const startCfi = currentLocation.start.cfi
       const progress = this.currentBook.locations.percentageFromCfi(startCfi)
-      console.log('refresh', currentLocation)
+     // console.log('refresh', currentLocation)
       this.setSection(currentLocation.start.index)
       this.setProgress(Math.floor(progress * 100))
       saveLocation(this.fileName, startCfi)
@@ -183,7 +183,7 @@ export const storeShelfMixin = {
         }
         return book
       })).then(() => {
-        const list = computedId(appendAddToShelf([].concat(
+        const list = computeId(appendAddToShelf([].concat(
           removeAddFromShelf(this.shelfList), ...this.shelfSelected)))
         this.setShelfList(list).then(() => {
           this.simpleToast(this.$t('shelf.moveBookOutSuccess'))

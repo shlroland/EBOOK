@@ -1,5 +1,5 @@
 <template>
-<div class="store">
+<div id="store">
   <router-view>
   </router-view>
 </div>
@@ -11,11 +11,11 @@
     }
 </script>
 
-<style scoped>
-@import "../../assets/styles/global.scss";
-  .store{
+<style lang="css" scoped>
+  @import "../../assets/styles/global.scss";
+  #store {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background: white;
   }
 </style>

@@ -38,7 +38,7 @@
 <script>
   import EbookDialog from '../common/Dialog'
   import { storeShelfMixin } from '../../utils/mixin'
-  import { removeAddFromShelf, appendAddToShelf, computedId } from '../../utils/store'
+  import { removeAddFromShelf, appendAddToShelf } from '../../utils/store'
   import { saveBookShelf } from '../../utils/LocalStorage'
 
   export default {

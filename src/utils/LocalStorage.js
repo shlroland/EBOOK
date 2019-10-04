@@ -129,6 +129,6 @@ export function getFontSize (fileName) {
 }
 
 export function saveFontSize (fileName, fontSize) {
-  console.log(fileName)
+ // console.log(fileName)
   setBookObject(fileName, 'fontSize', fontSize)
 }

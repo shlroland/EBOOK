@@ -86,7 +86,7 @@ export default {
     search () {
       if (this.searchText && this.searchText.length > 0) {
         this.doSearch(this.searchText).then((list) => {
-          console.log(list)
+        // console.log(list)
           this.searchList = list
           this.searchList.map(item => {
             item.excerpt = item.excerpt.replace(this.searchText, `<span class="content-search-text">${this.searchText}</span>`)

@@ -255,16 +255,16 @@
     mounted () {
       const books = this.$route.params.fileName.split('|')
       const fileName = books[1]
-      console.log(books)
+     // console.log(books)
       getLocalForage(fileName, (err, blob) => {
         if (!err && blob) {
           this.setFileName(books.join('/')).then(() => {
             this.initEpub(blob)
           })
         } else {
-          console.log('在线获取')
+         // console.log('在线获取')
           this.setFileName(this.$route.params.fileName.split('|').join('/')).then(() => {
-            const url = process.env.VUE_APP_RES_URL + '/epub/' + this.fileName + '.epub'
+            const url = process.env.VUE_APP_EPUB_URL + '/' + this.fileName + '.epub'
             this.initEpub(url)
           })
         }

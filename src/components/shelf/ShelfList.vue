@@ -40,7 +40,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   @import "../../assets/styles/global";
 
   .shelf-list {
@@ -48,24 +48,21 @@
     left: 0;
     z-index: 100;
     width: 100%;
-    #shelf-list{
+    #shelf-list {
       display: flex;
       flex-flow: row wrap;
+      width: 100%;
       padding: 0 px2rem(15);
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
       box-sizing: border-box;
       .shelf-list-item-wrapper {
         flex: 0 0 33.33%;
         width: 33.33%;
         padding: px2rem(15);
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
         box-sizing: border-box;
-        &.list-leave-active{
+        &.list-leave-active {
           display: none;
         }
-        &.list-move{
+        &.list-move {
           transition: transform .5s;
         }
         .shelf-list-title-wrapper {
@@ -73,6 +70,5 @@
         }
       }
     }
-
   }
 </style>

@@ -38,7 +38,7 @@
   export default {
     mixins: [storeHomeMixin],
     components: {
-      HotSearchList,
+      HotSearchList
     },
     data () {
       return {
